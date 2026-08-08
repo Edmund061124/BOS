@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="420" viewBox="0 0 640 420">
+  <!-- Decorative, seamlessly-tileable code/API watermark for the Hero background. -->
+  <!-- Colours mirror VS Code's default "Dark+" syntax palette (keyword / string / property / function / type), swapped onto a light background via a dark "punctuation" tone instead of the usual near-white default text colour. -->
+  <g font-family="Consolas, 'SF Mono', Menlo, 'Courier New', monospace" font-size="13" font-weight="600">
+    <!-- left column -->
+    <text x="0" y="30">
+      <tspan fill="#C586C0">POST</tspan><tspan fill="#111110"> </tspan><tspan fill="#CE9178">/api/v1/workflows</tspan>
+    </text>
+    <text x="0" y="54">
+      <tspan fill="#111110">{ </tspan><tspan fill="#9CDCFE">&quot;trigger&quot;</tspan><tspan fill="#111110">: </tspan><tspan fill="#CE9178">&quot;order.created&quot;</tspan><tspan fill="#111110"> }</tspan>
+    </text>
+
+    <text x="0" y="250">
+      <tspan fill="#C586C0">SELECT</tspan><tspan fill="#111110"> * </tspan><tspan fill="#C586C0">FROM</tspan><tspan fill="#111110"> </tspan><tspan fill="#4EC9B0">inventory</tspan>
+    </text>
+    <text x="0" y="274">
+      <tspan fill="#C586C0">WHERE</tspan><tspan fill="#111110"> </tspan><tspan fill="#4EC9B0">status</tspan><tspan fill="#111110"> = </tspan><tspan fill="#CE9178">'synced'</tspan>
+    </text>
+
+    <text x="0" y="384">
+      <tspan fill="#DCDCAA">sync</tspan><tspan fill="#111110">(</tspan><tspan fill="#4EC9B0">system</tspan><tspan fill="#111110">).</tspan><tspan fill="#DCDCAA">then</tspan><tspan fill="#111110">(</tspan><tspan fill="#4EC9B0">deploy</tspan><tspan fill="#111110">)</tspan>
+    </text>
+
+    <!-- middle column -->
+    <text x="230" y="140">
+      <tspan fill="#4EC9B0">approval</tspan><tspan fill="#111110">.</tspan><tspan fill="#9CDCFE">queue</tspan><tspan fill="#111110">.</tspan><tspan fill="#DCDCAA">process</tspan><tspan fill="#111110">()</tspan>
+    </text>
+
+    <text x="40" y="192">
+      <tspan fill="#4EC9B0">CRM</tspan><tspan fill="#111110"> &#8594; </tspan><tspan fill="#4EC9B0">ERP</tspan><tspan fill="#111110"> &#8594; </tspan><tspan fill="#4EC9B0">Fulfilment</tspan>
+    </text>
+
+    <text x="230" y="320">
+      <tspan fill="#4EC9B0">webhook</tspan><tspan fill="#111110">.</tspan><tspan fill="#DCDCAA">on</tspan><tspan fill="#111110">(</tspan><tspan fill="#CE9178">'invoice.paid'</tspan><tspan fill="#111110">)</tspan>
+    </text>
+
+    <!-- right column -->
+    <text x="400" y="70">
+      <tspan fill="#C586C0">GET</tspan><tspan fill="#111110"> </tspan><tspan fill="#CE9178">/customers/:id</tspan>
+    </text>
+    <text x="400" y="94">
+      <tspan fill="#111110">{ </tspan><tspan fill="#9CDCFE">&quot;status&quot;</tspan><tspan fill="#111110">: </tspan><tspan fill="#CE9178">&quot;operational&quot;</tspan><tspan fill="#111110"> }</tspan>
+    </text>
+
+    <text x="400" y="250">
+      <tspan fill="#C586C0">PUT</tspan><tspan fill="#111110"> </tspan><tspan fill="#CE9178">/orders/:id/status</tspan>
+    </text>
+    <text x="400" y="274">
+      <tspan fill="#111110">{ </tspan><tspan fill="#9CDCFE">&quot;status&quot;</tspan><tspan fill="#111110">: </tspan><tspan fill="#CE9178">&quot;shipped&quot;</tspan><tspan fill="#111110"> }</tspan>
+    </text>
+
+    <text x="400" y="384">
+      <tspan fill="#DCDCAA">cron</tspan><tspan fill="#111110">(</tspan><tspan fill="#CE9178">'0 * * * *'</tspan><tspan fill="#111110">)</tspan>
+    </text>
+  </g>
+</svg>
