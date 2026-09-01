@@ -1,0 +1,16 @@
+User-agent: *
+Allow: /
+
+# Internal docs — not public site content. Prefer excluding these from deploy
+# entirely; Disallow only asks crawlers not to index (files can still be fetched).
+Disallow: /README.md
+Disallow: /Progress.md
+Disallow: /Project-status.md
+Disallow: /Lesson.md
+Disallow: /md/
+Disallow: /SEO关键词.md
+Disallow: /SEO改进工程图.md
+Disallow: /方案.md
+Disallow: /弊端.md
+
+Sitemap: https://bosmy.tech/sitemap.xml

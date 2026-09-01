@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BOS Technology — 简化复杂业务运营 | 马来西亚互联数字化系统</title>
+  <meta name="description" content="工具互不相通会拖慢运营。BOS Technology 为企业打造一层互联数字化系统——网站、软件、CRM 与 ERP、自动化——帮助马来西亚企业简化复杂业务运营。">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://bosmy.tech/zh/">
+
+  <!-- Alternate language versions (hreflang) — each language has its own URL. -->
+  <link rel="alternate" hreflang="en" href="https://bosmy.tech/">
+  <link rel="alternate" hreflang="zh-Hans" href="https://bosmy.tech/zh/">
+  <link rel="alternate" hreflang="x-default" href="https://bosmy.tech/">
+
+  <!-- Google Search Console site-verification placeholder.
+       TODO: verify https://bosmy.tech/ in Google Search Console
+       (https://search.google.com/search-console), pick the "HTML tag"
+       verification method, and paste the content value it gives you here.
+       Without this, Google can still crawl the site (robots.txt/sitemap
+       already allow it) but there is no feedback loop — no indexing
+       status, no search-query data, no error reports. -->
+  <!-- <meta name="google-site-verification" content="PASTE_VALUE_HERE"> -->
+
+  <!-- ============ SOCIAL SHARING (Open Graph + Twitter Card) ============
+       These control how the page looks when shared on Facebook, LinkedIn,
+       WhatsApp, X/Twitter, etc. Uses assets/og-image.png (1200x630). -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BOS Technology">
+  <meta property="og:title" content="BOS Technology — 简化复杂业务运营 | 马来西亚互联数字化系统">
+  <meta property="og:description" content="工具互不相通会拖慢运营。BOS Technology 为企业打造一层互联数字化系统——网站、软件、CRM 与 ERP、自动化——帮助马来西亚企业简化复杂业务运营。">
+  <meta property="og:url" content="https://bosmy.tech/zh/">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:locale:alternate" content="en_MY">
+  <meta property="og:image" content="https://bosmy.tech/assets/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="BOS Technology — 简化复杂业务运营">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="BOS Technology — 简化复杂业务运营 | 马来西亚互联数字化系统">
+  <meta name="twitter:description" content="工具互不相通会拖慢运营。BOS Technology 为企业打造一层互联数字化系统——网站、软件、CRM 与 ERP、自动化——帮助马来西亚企业简化复杂业务运营。">
+  <meta name="twitter:image" content="https://bosmy.tech/assets/og-image.png">
+  <meta name="twitter:image:alt" content="BOS Technology — 简化复杂业务运营">
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="64x64" href="../assets/favicon-64.png">
+  <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+
+  <!-- Fonts: Source Serif 4 (display) + Source Sans 3 (body/UI) + IBM Plex Mono (uppercase labels).
+       Formal, professional case contrast; zh page also loads Noto SC for CJK. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;500;600&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;0,8..60,700;1,8..60,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../styles.css">
+
+  <!-- ============ STRUCTURED DATA (JSON-LD) ============
+       Helps search engines understand BOS Technology as a business entity.
+       sameAs mirrors the three contact channels in main.js CONTACT_LINKS. -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "BOS Technology",
+    "alternateName": "Business Operating System (BOS)",
+    "url": "https://bosmy.tech/zh/",
+    "logo": "https://bosmy.tech/assets/bos-mark-transparent.png",
+    "image": "https://bosmy.tech/assets/og-image.png",
+    "description": "工具互不相通会拖慢运营。BOS Technology 为企业打造一层互联数字化系统——网站、软件、CRM 与 ERP、自动化——帮助马来西亚企业简化复杂业务运营。",
+    "sameAs": [
+      "https://www.facebook.com/bostechmy",
+      "https://www.instagram.com/bostechmy/",
+      "https://wa.me/601116641914"
+    ],
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Kuching",
+      "addressRegion": "Sarawak",
+      "addressCountry": "MY"
+    },
+    "areaServed": [
+      { "@type": "City", "name": "Kuching" },
+      { "@type": "State", "name": "Sarawak" },
+      { "@type": "Country", "name": "Malaysia" }
+    ],
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "BOS Technology 能力",
+      "itemListElement": [
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "业务网站与平台",
+            "description": "企业官网、品牌网站、电子商务与定制 Web 平台，围绕真实运营构建。"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "定制业务软件",
+            "description": "定制软件、Web 应用与移动应用，按实际工作方式塑造。"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "业务系统（CRM 与 ERP）",
+            "description": "CRM、类 ERP 核心、库存、会员与管理后台，落在一层互联系统中。"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "工作流与流程自动化",
+            "description": "审批流、流程自动化、API 集成与务实的 AI 自动化，减少重复劳动。"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "数字化转型与系统整合",
+            "description": "数字化升级、系统整合与流程优化，端到端改进运营方式。"
+          }
+        }
+      ]
+    }
+  }
+  </script>
+
+  <!-- ============ GOOGLE ANALYTICS (GA4) — placeholder, not yet active ============
+       TODO: once you have a real GA4 Measurement ID (looks like "G-XXXXXXXXXX"),
+       replace both G-XXXXXXXXXX values below and uncomment this whole block
+       so the two script tags actually run. Needed on every page for
+       site-wide analytics to work.
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
+  -->
+</head>
+<body>
+
+  <!-- ============ SKIP LINK (ACCESSIBILITY) ============ -->
+  <a class="skip-link" href="#main">跳到正文</a>
+
+  <!-- ============ NAV ============ -->
+  <header class="nav" id="siteNav">
+    <div class="nav-inner">
+      <a href="#top" class="nav-brand" aria-label="Business Operating System (BOS)，返回顶部">
+        <img class="nav-mark" src="../assets/bos-mark-transparent.png" alt="BOS letter mark" width="520" height="357" decoding="async">
+        <span class="nav-wordmark">Business Operating System</span>
+      </a>
+
+                        <nav class="nav-links" id="navLinks" aria-label="主导航">
+        <a href="/zh/" aria-current="page">首页</a>
+        <a href="/zh/capabilities/website-development/qa/">网站平台</a>
+        <a href="/zh/capabilities/software-development/qa/">定制软件</a>
+        <a href="/zh/capabilities/business-systems/qa/">业务系统</a>
+        <a href="/zh/capabilities/workflow-automation/qa/">流程自动化</a>
+        <a href="/zh/capabilities/digital-transformation/qa/">系统整合</a>
+        <a href="/zh/process/">流程</a>
+        <a href="/zh/kuching/">古晋</a>
+        <a href="/zh/faq/">常见问题</a>
+        <a href="/zh/about/">关于</a>
+        <a href="/zh/contact/">联系</a>
+      </nav>
+
+      <div class="nav-actions">
+        <nav class="lang-switch" aria-label="语言">
+          <a href="/" hreflang="en" lang="en">EN</a>
+          <a href="/zh/" hreflang="zh-Hans" lang="zh-Hans" aria-current="page">中文</a>
+        </nav>
+        <button type="button" class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks" aria-label="打开菜单" data-label-open="打开菜单" data-label-close="关闭菜单">
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- ============ HERO ============ -->
+    <section class="hero" id="top">
+      <div class="hero-bg" aria-hidden="true">
+        <!-- Decorative "floating code" watermark — 42 independent business/API
+             fragments, each gently drifting (see .hero-code-line in styles.css).
+             Purely decorative, not real product code; hidden from screen readers
+             via the parent's aria-hidden. -->
+        <div class="hero-code-field">
+          <pre class="hero-code-line"><span class="tok-kw">POST</span> <span class="tok-str">/v1/workflows</span></pre>
+          <pre class="hero-code-line"><span class="tok-punc">{ </span><span class="tok-prop">"event"</span><span class="tok-punc">: </span><span class="tok-str">"new"</span><span class="tok-punc"> }</span></pre>
+          <pre class="hero-code-line"><span class="tok-kw">SELECT</span> <span class="tok-punc">* </span><span class="tok-kw">FROM</span> <span class="tok-type">stock</span></pre>
+          <pre class="hero-code-line"><span class="tok-type">status</span><span class="tok-punc"> = </span><span class="tok-str">'synced'</span></pre>
+          <pre class="hero-code-line"><span class="tok-type">CRM</span><span class="tok-punc"> → </span><span class="tok-type">ERP</span></pre>
+          <pre class="hero-code-line"><span class="tok-fn">sync</span><span class="tok-punc">(</span><span class="tok-type">system</span><span class="tok-punc">)</span></pre>
+          <pre class="hero-code-line"><span class="tok-kw">GET</span> <span class="tok-str">/customers/:id</span></pre>
+          <pre class="hero-code-line"><span class="tok-punc">{ </span><span class="tok-prop">"status"</span><span class="tok-punc">: </span><span class="tok-str">"ok"</span><span class="tok-punc"> }</span></pre>
+          <pre class="hero-code-line"><span class="tok-kw">PUT</span> <span class="tok-str">/orders/:id</span></pre>
+          <pre class="hero-code-line"><span class="tok-punc">{ </span><span class="tok-prop">"status"</span><span class="tok-punc">: </span><span class="tok-str">"out"</span><span class="tok-punc"> }</span></pre>
+          <pre class="hero-code-line"><span class="tok-type">webhook</span><span class="tok-punc">.</span><span class="tok-fn">on</span><span class="tok-punc">(</span><span class="tok-str">'paid'</span><span class="tok-punc">)</span></pre>
+          <pre class="hero-code-line"><span class="tok-type">queue</span><span class="tok-punc">.</span><span class="tok-fn">process</span><span class="tok-punc">()</span></pre>
+          <pre class="hero-code-line"><span class="tok-kw">DELETE</span> <span class="tok-str">/webhooks</span></pre>
+          <pre class="hero-code-line"><span class="tok-punc">{ </span><span class="tok-prop">"reason"</span><span class="tok-punc">: </span><span class="tok-str">"dup"</span><span class="tok-punc"> }</span></pre>
+          <pre class="hero-code-line"><span class="tok-type">inventory</span><span class="tok-punc">.</span><span class="tok-type">qty</span><span class="tok-punc"> -= 1</span></pre>
+          <pre class="hero-code-line"><span class="tok-type">sku</span><span class="tok-punc"> = </span><span class="tok-str">'BOS-1042'</span></pre>
+          <pre class="hero-code-line"><span class="tok-type">Billing</span><span class="tok-punc"> → </span><span class="tok-type">Ledger</span></pre>
+          <pre class="hero-code-line"><span class="tok-type">queue</span><span class="tok-punc">.</span><span class="tok-fn">retry</span><span class="tok-punc">(</span><span class="tok-type">job</span><span class="tok-punc">)</span></pre>
+          <pre class="hero-code-line"><span class="tok-kw">GET</span> <span class="tok-str">/reports/daily</span></pre>
+          <pre class="hero-code-line"><span class="tok-punc">{ </span><span class="tok-prop">"state"</span><span class="tok-punc">: </span><span class="tok-str">"done"</span><span class="tok-punc"> }</span></pre>
+          <pre class="hero-code-line"><span class="tok-kw">POST</span> <span class="tok-str">/integrations</span></pre>
+          <pre class="hero-code-line"><span class="tok-punc">{ </span><span class="tok-prop">"erp"</span><span class="tok-punc">: </span><span class="tok-str">"xero"</span><span class="tok-punc"> }</span></pre>
+          <pre class="hero-code-line"><span class="tok-type">notify</span><span class="tok-punc">.</span><span class="tok-fn">on</span><span class="tok-punc">(</span><span class="tok-str">'breach'</span><span class="tok-punc">)</span></pre>
+          <pre class="hero-code-line"><span class="tok-fn">cron</span><span class="tok-punc">(</span><span class="tok-str">'*/15 * * *'</span><span class="tok-punc">)</span></pre>
+          <pre class="hero-code-line"><span class="tok-kw">PATCH</span> <span class="tok-str">/orders/:id</span></pre>
+          <pre class="hero-code-line"><span class="tok-punc">{ </span><span class="tok-prop">"pri"</span><span class="tok-punc">: </span><span class="tok-str">"high"</span><span class="tok-punc"> }</span></pre>
+          <pre class="hero-code-line"><span class="tok-type">ERP</span><span class="tok-punc">.</span><span class="tok-fn">export</span><span class="tok-punc">(</span><span class="tok-str">'csv'</span><span class="tok-punc">)</span></pre>
+          <pre class="hero-code-line"><span class="tok-type">queue</span><span class="tok-punc">.</span><span class="tok-type">length</span><span class="tok-punc"> &gt; 0</span></pre>
+          <pre class="hero-code-line"><span class="tok-fn">notify</span><span class="tok-punc">(</span><span class="tok-str">'#ops'</span><span class="tok-punc">)</span></pre>
+          <pre class="hero-code-line"><span class="tok-punc">{ </span><span class="tok-prop">"synced"</span><span class="tok-punc">: </span><span class="tok-str">"yes"</span><span class="tok-punc"> }</span></pre>
+          <pre class="hero-code-line"><span class="tok-kw">GET</span> <span class="tok-str">/invoices/:id</span></pre>
+          <pre class="hero-code-line"><span class="tok-kw">DELETE</span> <span class="tok-str">/sessions</span></pre>
+          <pre class="hero-code-line"><span class="tok-type">Auth</span><span class="tok-punc"> → </span><span class="tok-type">CRM</span></pre>
+          <pre class="hero-code-line"><span class="tok-type">retry</span><span class="tok-punc">.</span><span class="tok-type">attempts</span><span class="tok-punc"> &lt; 3</span></pre>
+          <pre class="hero-code-line"><span class="tok-kw">POST</span> <span class="tok-str">/exports/csv</span></pre>
+          <pre class="hero-code-line"><span class="tok-punc">{ </span><span class="tok-prop">"q"</span><span class="tok-punc">: </span><span class="tok-str">"ready"</span><span class="tok-punc"> }</span></pre>
+          <pre class="hero-code-line"><span class="tok-punc">{ </span><span class="tok-prop">"env"</span><span class="tok-punc">: </span><span class="tok-str">"prod"</span><span class="tok-punc"> }</span></pre>
+          <pre class="hero-code-line"><span class="tok-type">build</span><span class="tok-punc">.</span><span class="tok-fn">deploy</span><span class="tok-punc">(</span><span class="tok-str">'v2.4'</span><span class="tok-punc">)</span></pre>
+          <pre class="hero-code-line"><span class="tok-type">healthcheck</span><span class="tok-punc">.</span><span class="tok-fn">ping</span><span class="tok-punc">()</span></pre>
+          <pre class="hero-code-line"><span class="tok-punc">{ </span><span class="tok-prop">"region"</span><span class="tok-punc">: </span><span class="tok-str">"sg"</span><span class="tok-punc"> }</span></pre>
+          <pre class="hero-code-line"><span class="tok-type">logs</span><span class="tok-punc">.</span><span class="tok-fn">stream</span><span class="tok-punc">(</span><span class="tok-str">'api'</span><span class="tok-punc">)</span></pre>
+          <pre class="hero-code-line"><span class="tok-type">queue</span><span class="tok-punc">.</span><span class="tok-fn">flush</span><span class="tok-punc">()</span></pre>
+        </div>
+      </div>
+
+      <div class="hero-inner">
+        <p class="eyebrow hero-enter" style="--enter-delay: 40ms">马来西亚 · 定制数字化系统</p>
+
+        <div class="hero-brand hero-enter" style="--enter-delay: 120ms">
+          <img class="hero-mark" src="../assets/bos-mark-transparent.png" alt="Business Operating System (BOS)" width="520" height="357" decoding="async" fetchpriority="high">
+          <p class="hero-fullname">Business Operating System</p>
+        </div>
+
+        <h1 class="hero-tagline hero-enter" style="--enter-delay: 220ms">我们通过数字化系统，简化复杂的商业运营</h1>
+
+        <p class="hero-sub hero-enter" style="--enter-delay: 320ms">BOS Technology 为企业设计并构建真正贴合业务的定制系统</p>
+        <p class="hero-sub hero-enter" style="--enter-delay: 380ms">从业务流程到自动化，从数据到运营，我们帮助企业把复杂工作交给系统，把经验沉淀下来，把重复劳动转化为可复制、可追踪、可规模化的企业能力</p>
+
+        <div class="hero-actions hero-enter" style="--enter-delay: 460ms">
+          <a class="btn btn-primary" href="/zh/contact/">联系我们</a>
+          <a href="#services" class="link-arrow">查看能力<span aria-hidden="true">↓</span></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SERVICES / CAPABILITIES ============ -->
+    <section class="section" id="services">
+      <div class="section-inner">
+        <div class="section-head reveal">
+          <p class="eyebrow">能力</p>
+          <h2>让复杂业务，成为可运行的系统</h2>
+          <p class="section-lead">BOS Technology 为企业设计并构建定制数字化系统，将复杂业务流程系统化、自动化，把重复劳动、业务经验与数据转化为可复制、可追踪、可规模化的企业能力</p>
+        </div>
+
+        <div class="service-list">
+
+          <article class="service-row reveal">
+            <span class="service-index">01</span>
+            <div class="service-body">
+              <h3>业务网站与平台</h3>
+              <p class="capability-pain">网站看起来合适，却接不上真实的业务运转？</p>
+              <p>企业官网、品牌网站、电子商务与定制 Web 平台，围绕真实运营构建。</p>
+              <ul class="tag-list">
+                <li>企业官网</li>
+                <li>品牌网站</li>
+                <li>电子商务</li>
+                <li>定制 Web 平台</li>
+              </ul>
+                          <a class="service-more" href="/zh/capabilities/website-development/">了解更多<span aria-hidden="true"> →</span></a>
+            </div>
+          </article>
+
+          <article class="service-row reveal">
+            <span class="service-index">02</span>
+            <div class="service-body">
+              <h3>定制业务软件</h3>
+              <p class="capability-pain">现成软件逼着团队迁就产品，而不是软件迁就业务？</p>
+              <p>定制软件、Web 应用与移动应用，按实际工作方式塑造。</p>
+              <ul class="tag-list">
+                <li>定制软件</li>
+                <li>企业应用</li>
+                <li>Web 应用</li>
+                <li>移动应用</li>
+              </ul>
+                          <a class="service-more" href="/zh/capabilities/software-development/">了解更多<span aria-hidden="true"> →</span></a>
+            </div>
+          </article>
+
+          <article class="service-row reveal">
+            <span class="service-index">03</span>
+            <div class="service-body">
+              <h3>业务系统（CRM 与 ERP）</h3>
+              <p class="capability-pain">客户、订单与库存散落在表格和多个工具中？</p>
+              <p>CRM、类 ERP 核心、库存、会员与管理后台，落在一层互联系统中。</p>
+              <ul class="tag-list">
+                <li>CRM</li>
+                <li>ERP</li>
+                <li>库存与订单</li>
+                <li>管理后台</li>
+              </ul>
+                          <a class="service-more" href="/zh/capabilities/business-systems/">了解更多<span aria-hidden="true"> →</span></a>
+            </div>
+          </article>
+
+          <article class="service-row reveal">
+            <span class="service-index">04</span>
+            <div class="service-body">
+              <h3>工作流与流程自动化</h3>
+              <p class="capability-pain">大量时间花在审批与录入上，而系统本可在数秒内完成？</p>
+              <p>审批流、流程自动化、API 集成与务实的 AI 自动化，减少重复劳动。</p>
+              <ul class="tag-list">
+                <li>流程自动化</li>
+                <li>审批</li>
+                <li>API 集成</li>
+                <li>AI 自动化</li>
+              </ul>
+                          <a class="service-more" href="/zh/capabilities/workflow-automation/">了解更多<span aria-hidden="true"> →</span></a>
+            </div>
+          </article>
+
+          <article class="service-row reveal">
+            <span class="service-index">05</span>
+            <div class="service-body">
+              <h3>数字化转型与系统整合</h3>
+              <p class="capability-pain">业务成长后旧工具难以支撑，系统之间也不再互通？</p>
+              <p>数字化升级、系统整合与流程优化，端到端改进运营方式。</p>
+              <ul class="tag-list">
+                <li>系统整合</li>
+                <li>流程优化</li>
+                <li>数字化升级</li>
+              </ul>
+                          <a class="service-more" href="/zh/capabilities/digital-transformation/">了解更多<span aria-hidden="true"> →</span></a>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PROCESS (teaser → /process/) ============ -->
+    <section class="section section-soft" id="process">
+      <div class="section-inner section-inner-narrow">
+        <div class="contact-block reveal">
+          <p class="eyebrow">流程</p>
+          <h2>我们如何协作</h2>
+          <p class="section-lead">发现、设计与构建、上线与改进——从第一次沟通到系统真正跑起来的清晰路径。</p>
+          <a class="btn btn-primary btn-lg" href="/zh/process/">查看流程</a>
+        </div>
+      </div>
+    </section>
+
+
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img class="footer-mark" src="../assets/bos-mark-white.png" alt="BOS letter mark" width="520" height="357" loading="lazy" decoding="async">
+        <div class="footer-brand-text">
+          <span>Business Operating System (BOS)</span>
+          <p class="footer-address">服务马来西亚各地企业</p>
+        </div>
+      </div>
+      <nav class="footer-links" aria-label="页脚">
+        <a href="/zh/capabilities/website-development/">业务网站与平台</a>
+        <a href="/zh/capabilities/software-development/">定制业务软件</a>
+        <a href="/zh/capabilities/business-systems/">业务系统（CRM 与 ERP）</a>
+        <a href="/zh/capabilities/workflow-automation/">工作流与流程自动化</a>
+        <a href="/zh/capabilities/digital-transformation/">数字化转型与系统整合</a>
+        <a href="/zh/kuching/">古晋</a>
+        <a href="/zh/faq/">常见问题</a>
+        <a href="/zh/about/">关于</a>
+      </nav>
+      <div class="footer-meta">
+        <p>&copy; 2026 Business Operating System (BOS)。保留所有权利。</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../main.js"></script>
+</body>
+</html>

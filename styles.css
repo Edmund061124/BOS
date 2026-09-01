@@ -1,0 +1,1792 @@
+/* ==========================================================================
+   BOS — Business Operating System | styles.css
+   ---------------------------------------------------------------------
+   目录 / Table of contents:
+   1. Design tokens (colours, type, spacing)
+   2. Reset & base
+   3. Layout helpers / utilities
+   4. Navigation
+   5. Hero
+   6. Sections (shared) + Services
+   7. Process
+   8. Contact section
+   9. Footer
+   10. Scroll-reveal + hero enter
+   11. Responsive breakpoints
+   12. Inner pages (FAQ accordion, page layout)
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. DESIGN TOKENS
+   -------------------------------------------------------------------------- */
+:root {
+  /* Type */
+  /* Formal professional pair: Source Serif 4 (display) + Source Sans 3 (UI/body).
+     Clear uppercase/lowercase glyph contrast; CJK falls back to Noto / system. */
+  --font-display: 'Source Serif 4', 'Noto Serif SC', 'Songti SC', Georgia, 'Times New Roman', serif;
+  --font-body: 'Source Sans 3', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', 'Segoe UI', sans-serif;
+  --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+
+  /* Colour — white-forward, near-black accent, no purple/neon */
+  --color-bg: #ffffff;
+  --color-bg-soft: #f7f6f2;
+  --color-ink: #111110;
+  --color-ink-soft: #55524c;
+  --color-muted: #8c887f;
+  --color-border: #e6e2d9;
+  --color-line: #dcd7cb;
+  --color-footer-bg: #111110;
+  --color-footer-text: #f2f0ec;
+  --color-footer-muted: #a7a49c;
+
+  /* Layout */
+  --container-width: 1180px;
+  --container-pad: 32px;
+  --nav-height: 84px;
+  /* Full link row only above this; below = hamburger (prevents overlap). */
+  --nav-desktop-min: 1400px;
+  --radius-sm: 3px;
+
+  /* Motion */
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --transition-fast: 180ms var(--ease);
+  --transition-base: 320ms var(--ease);
+}
+
+/* --------------------------------------------------------------------------
+   2. RESET & BASE
+   -------------------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+body {
+  margin: 0;
+  /* The nav is `position: fixed` (see .nav below) so it's taken out of
+     normal document flow and never scrolls with the page. This top
+     padding reserves the same space so the Hero content isn't hidden
+     underneath it. */
+  padding-top: var(--nav-height);
+  overflow-x: hidden;
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: 16.5px;
+  line-height: 1.65;
+  font-weight: 400;
+  letter-spacing: 0.005em;
+  font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.2;
+  margin: 0;
+  letter-spacing: -0.015em;
+  font-feature-settings: 'kern' 1, 'liga' 1;
+}
+
+p {
+  margin: 0;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+/* Anchors offset for the sticky nav */
+section[id],
+main [id] {
+  scroll-margin-top: var(--nav-height);
+}
+
+/* Respect reduced-motion preference */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .hero-enter,
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+}
+
+/* Skip link for keyboard/screen-reader users */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: var(--color-ink);
+  color: #fff;
+  padding: 12px 20px;
+  z-index: 999;
+  border-radius: var(--radius-sm);
+}
+.skip-link:focus {
+  left: 16px;
+  top: 16px;
+}
+
+/* --------------------------------------------------------------------------
+   3. LAYOUT HELPERS
+   -------------------------------------------------------------------------- */
+.section-inner {
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: 0 var(--container-pad);
+}
+
+.section-inner-narrow {
+  max-width: 760px;
+}
+
+.section {
+  padding: 128px 0;
+  border-top: 1px solid var(--color-border);
+}
+
+.section-soft {
+  background: var(--color-bg-soft);
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-ink-soft);
+  margin: 0 0 18px;
+}
+
+/* "// " code-comment marker — plain inline content so long labels still
+   wrap normally on narrow screens (a flex layout here would prevent that). */
+.eyebrow::before {
+  content: '// ';
+  color: var(--color-muted);
+  font-weight: 600;
+}
+
+.section-head {
+  max-width: 640px;
+  margin: 0 0 72px;
+}
+
+.section-head h2 {
+  font-size: clamp(28px, 3.4vw, 40px);
+  margin-bottom: 18px;
+}
+
+.section-lead {
+  font-size: 17px;
+  color: var(--color-ink-soft);
+  max-width: 52ch;
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid var(--color-ink);
+  border-radius: var(--radius-sm);
+  padding: 15px 30px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: transparent;
+  color: var(--color-ink);
+  transition: background var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
+  white-space: nowrap;
+}
+
+.btn:active {
+  transform: scale(0.96);
+}
+
+.btn-primary {
+  background: var(--color-ink);
+  color: #fff;
+}
+
+.btn-primary:hover,
+.btn-primary:focus-visible {
+  background: transparent;
+  color: var(--color-ink);
+}
+
+.btn-sm {
+  padding: 10px 20px;
+  font-size: 12px;
+}
+
+.btn-lg {
+  padding: 18px 38px;
+  font-size: 14px;
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 3px;
+}
+
+.link-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+  border-bottom: 1px solid var(--color-ink);
+  padding-bottom: 3px;
+  transition: opacity var(--transition-fast), gap var(--transition-fast);
+}
+
+.link-arrow span[aria-hidden] {
+  display: inline-block;
+  transition: transform var(--transition-fast);
+}
+
+.link-arrow:hover,
+.link-arrow:focus-visible {
+  gap: 12px;
+  opacity: 0.7;
+}
+
+.link-arrow:hover span[aria-hidden],
+.link-arrow:focus-visible span[aria-hidden] {
+  transform: translateY(3px);
+}
+
+.link-arrow:active {
+  opacity: 0.45;
+}
+
+/* Consistent, slightly more designed focus ring across interactive elements */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.tag-list li {
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-ink-soft);
+  transition: border-color var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
+}
+
+.tag-list li:hover {
+  border-color: var(--color-ink);
+  color: var(--color-ink);
+  transform: translateY(-2px);
+}
+
+/* --------------------------------------------------------------------------
+   4. NAVIGATION
+   -------------------------------------------------------------------------- */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  height: var(--nav-height);
+  display: flex;
+  align-items: center;
+  background: rgba(250, 250, 249, 0.92);
+  backdrop-filter: saturate(140%) blur(10px);
+  -webkit-backdrop-filter: saturate(140%) blur(10px);
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--transition-base), box-shadow var(--transition-base);
+  /* Do not clip the mobile drawer (absolute under the bar). */
+  overflow: visible;
+}
+
+.nav.is-scrolled {
+  border-bottom-color: var(--color-border);
+  box-shadow: 0 6px 24px rgba(17, 17, 16, 0.04);
+}
+
+.nav-inner {
+  width: 100%;
+  max-width: max(var(--container-width), 1360px);
+  margin: 0 auto;
+  padding: 0 var(--container-pad);
+  /* Three zones: brand | nav | actions — must not paint over each other. */
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr) max-content;
+  align-items: center;
+  column-gap: 28px;
+  min-width: 0;
+  position: relative;
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+  justify-self: start;
+  position: relative;
+  z-index: 2;
+  /* Cover any stray link overflow so text never stacks on the logo. */
+  background: rgba(250, 250, 249, 0.96);
+  padding-right: 8px;
+}
+
+.nav-mark {
+  /* Deliberately oversized relative to .nav-wordmark so the letter mark
+     reads as the primary identity element and the full name as a small,
+     secondary caption beside it — a clear scale contrast, not a matched pair. */
+  width: 52px;
+  height: auto;
+  display: block;
+}
+
+.nav-wordmark {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+  white-space: nowrap;
+  /* Long nav row: mark alone — wordmark caused brand/link collisions. */
+  display: none;
+}
+
+/* Nav: five capability tabs + site links — single row, no overlap */
+.nav-links {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  gap: 0 24px;
+  font-size: 15px;
+  font-weight: 600;
+  justify-self: stretch;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  padding: 0 8px;
+  box-sizing: border-box;
+  /* Clip instead of painting over logo / language switch */
+  overflow: hidden;
+}
+
+.nav-links a {
+  position: relative;
+  color: var(--color-ink-soft);
+  transition: color var(--transition-fast);
+  white-space: nowrap;
+  flex: 0 0 auto;
+  padding: 2px 0;
+}
+
+.nav-links a:hover,
+.nav-links a:focus-visible {
+  color: var(--color-ink);
+}
+
+.nav-links a.is-active,
+.nav-links a[aria-current="page"] {
+  color: var(--color-ink);
+}
+
+/* Animated underline that grows from the centre — desktop nav only */
+@media (min-width: 1401px) {
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    right: 50%;
+    bottom: -6px;
+    height: 1px;
+    background: var(--color-ink);
+    transition: left var(--transition-fast), right var(--transition-fast);
+  }
+
+  .nav-links a:hover::after,
+  .nav-links a:focus-visible::after,
+  .nav-links a.is-active::after,
+  .nav-links a[aria-current="page"]::after {
+    left: 0;
+    right: 0;
+  }
+
+  /* CTA inside mobile drawer should not get the text-link underline. */
+  .nav-links a.btn::after {
+    display: none;
+  }
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  justify-self: end;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 2;
+  background: rgba(250, 250, 249, 0.96);
+  padding-left: 8px;
+}
+
+/* Language switcher — compact text links (EN | 中文), not pills.
+   Lives in .nav-actions so it stays visible on mobile. */
+.lang-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.lang-switch a {
+  color: var(--color-ink-soft);
+  padding: 4px 6px;
+  transition: color var(--transition-fast);
+}
+
+.lang-switch a:hover,
+.lang-switch a:focus-visible {
+  color: var(--color-ink);
+}
+
+.lang-switch a[aria-current="page"] {
+  color: var(--color-ink);
+}
+
+.lang-switch a + a::before {
+  content: '|';
+  margin-right: 6px;
+  color: var(--color-line);
+  font-weight: 400;
+  pointer-events: none;
+}
+
+/* CJK hero lines need a wider measure than English's ch cap */
+:lang(zh-Hans) .hero-tagline,
+:lang(ms) .hero-tagline {
+  max-width: 22em;
+}
+
+:lang(zh-Hans) .hero-sub,
+:lang(ms) .hero-sub {
+  max-width: 48em;
+}
+
+.nav-cta-mobile {
+  display: none;
+}
+
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: none;
+}
+
+.nav-toggle-bar {
+  display: block;
+  width: 18px;
+  height: 1.5px;
+  margin: 0 auto;
+  background: var(--color-ink);
+  transition: transform var(--transition-fast), opacity var(--transition-fast);
+}
+
+.nav-toggle[aria-expanded="true"] .nav-toggle-bar:first-child {
+  transform: translateY(3.25px) rotate(45deg);
+}
+.nav-toggle[aria-expanded="true"] .nav-toggle-bar:last-child {
+  transform: translateY(-3.25px) rotate(-45deg);
+}
+
+/* --------------------------------------------------------------------------
+   5. HERO
+   -------------------------------------------------------------------------- */
+.hero {
+  position: relative;
+  min-height: calc(100vh - var(--nav-height));
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  background: var(--color-bg);
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* Floating code/API-fragment watermark — each line below is an independent
+   element with its own gentle drift + opacity breathe (see .hero-code-line /
+   @keyframes hero-code-float-*), so the "coding" motif reads as scattered
+   fragments quietly floating past, rather than one flat printed texture.
+   Positions are anchored to the edge of the center content column (half of
+   .hero-inner's 860px max-width, i.e. 430px from center) instead of to the
+   viewport edge, so a line can never drift into the brand/tagline column —
+   on narrower viewports it simply sits past the visible edge and is clipped
+   by .hero's own overflow:hidden. */
+.hero-code-field {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.hero-code-line {
+  position: absolute;
+  margin: 0;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 1.4;
+  white-space: pre;
+  opacity: 0.85;
+  will-change: transform, opacity;
+  animation: hero-code-float-left-a 9s ease-in-out infinite;
+}
+
+/* Four drift variants, each biased to move ONLY away from the center safe
+   zone horizontally (never toward it) — left-side lines only ever gain
+   negative X (further left), right-side lines only ever gain positive X
+   (further right). This makes it safe to push the amplitude quite far: no
+   matter how big the swing, a line can mathematically never cross into the
+   center logo/tagline column, it can only drift further off-screen (where
+   .hero's overflow:hidden clips it) and back.
+   Each one is a 4-stop wander (not a simple back-and-forth bob) that moves
+   noticeably in BOTH axes — out-and-up, then further out at mid-height,
+   then out-and-down, then home — so the motion reads as loose, looping
+   drifting rather than a straight vertical bounce. */
+/* The horizontal (X) component of every stop below is viewport-relative
+   instead of a fixed px number: written as max(-CAPpx, Xvw) on the left
+   (negative-going) side and min(CAPpx, Xvw) on the right (positive-going)
+   side. Xvw is calibrated so the value matches the old fixed px number
+   exactly at a 1366px-wide viewport (the width these were last verified
+   safe at); below that it shrinks in step with the viewport (safer on
+   narrow screens), above it it grows (bigger, more visible swing on wide
+   monitors) until the CAP stops it from getting excessive on ultra-wide
+   screens. The vertical (Y) component is unrelated to edge-clipping and is
+   left as fixed px. See Lesson.md #36. */
+@keyframes hero-code-float-left-a {
+  0%   { transform: translate3d(0, 0, 0);                          opacity: 0.6; }
+  25%  { transform: translate3d(max(-37px, -1.61vw), -34px, 0);     opacity: 0.85; }
+  50%  { transform: translate3d(max(-85px, -3.66vw), -6px, 0);      opacity: 1; }
+  75%  { transform: translate3d(max(-51px, -2.2vw), 30px, 0);       opacity: 0.85; }
+  100% { transform: translate3d(0, 0, 0);                          opacity: 0.6; }
+}
+@keyframes hero-code-float-left-b {
+  0%   { transform: translate3d(0, 0, 0);                          opacity: 0.6; }
+  25%  { transform: translate3d(max(-61px, -2.64vw), 32px, 0);      opacity: 0.85; }
+  50%  { transform: translate3d(max(-92px, -3.95vw), 4px, 0);       opacity: 1; }
+  75%  { transform: translate3d(max(-44px, -1.9vw), -32px, 0);      opacity: 0.85; }
+  100% { transform: translate3d(0, 0, 0);                          opacity: 0.6; }
+}
+@keyframes hero-code-float-right-a {
+  0%   { transform: translate3d(0, 0, 0);                          opacity: 0.6; }
+  25%  { transform: translate3d(min(37px, 1.61vw), -34px, 0);       opacity: 0.85; }
+  50%  { transform: translate3d(min(85px, 3.66vw), -6px, 0);        opacity: 1; }
+  75%  { transform: translate3d(min(51px, 2.2vw), 30px, 0);         opacity: 0.85; }
+  100% { transform: translate3d(0, 0, 0);                          opacity: 0.6; }
+}
+@keyframes hero-code-float-right-b {
+  0%   { transform: translate3d(0, 0, 0);                          opacity: 0.6; }
+  25%  { transform: translate3d(min(61px, 2.64vw), 32px, 0);        opacity: 0.85; }
+  50%  { transform: translate3d(min(92px, 3.95vw), 4px, 0);         opacity: 1; }
+  75%  { transform: translate3d(min(44px, 1.9vw), -32px, 0);        opacity: 0.85; }
+  100% { transform: translate3d(0, 0, 0);                          opacity: 0.6; }
+}
+
+/* Desktop/large tablet: the full set of 12 lines, six drifting down the left
+   margin and six down the right margin, both outside the 860px content
+   column (430px = half of that width, plus a small extra gap per line). */
+/* Positions below are deliberately NOT on a grid: both the vertical (top%)
+   and horizontal (the "extra gap" added to the 430px safe-zone edge) values
+   are scattered irregularly per line — a small extra gap reads as "close to
+   the content column", a large one reads as "out near the viewport edge" —
+   so the watermark looks like scattered floating fragments at different
+   depths, not a neat queued-up column hugging one edge. Longer lines get a
+   smaller extra gap (kept closer to the safe zone, where there's more room
+   before the viewport edge) and short lines can afford a bigger one — this
+   keeps the scatter from reintroducing the edge-clipping problem noted in
+   Lesson.md #26/#28.
+   Each gap is written as FRACTION * max(0px, 50% - Cpx - ampMag) — this
+   directly computes "however much of the margin between the safe zone and
+   the real viewport edge is left over, after reserving room for this line's
+   own swing amplitude and its exact (measured) text width" and uses that
+   full remaining amount, instead of a flat vw fraction of the whole
+   viewport. FRACTION (0.33-1.0, one per line, based on the line's original
+   relative depth ranking) keeps the "shorter/shallower vs longer/deeper"
+   scatter — a FRACTION of 1 means that line always sits right at the true
+   edge (minus a small fixed buffer) at every width, which is what finally
+   closes the "empty margin near the screen edge on wide monitors" gap the
+   old flat-vw-fraction version left behind (see Lesson.md #38). max(0px, …)
+   stops it from going negative (and therefore into the safe zone) on the
+   narrowest supported width. */
+@media (min-width: 1250px) {
+  /* All 36 side-margin lines' vertical positions (both this first batch and
+     the two waves further down) were chosen together as one shuffled set —
+     any two lines on the SAME side are always at least ~4% of the hero's
+     height apart — instead of designing each wave's numbers in isolation,
+     which is what caused a few lines to nearly coincide the first time this
+     was expanded (see Lesson.md #32). */
+  .hero-code-line:nth-child(1)  { top: 23%; right: calc(50% + 430px + 0.545 * max(0px, 50% - 585px - min(85px, 3.66vw))); animation-name: hero-code-float-left-a;  animation-duration: 6.5s; animation-delay: -2s; }
+  .hero-code-line:nth-child(2)  { top: 55%; right: calc(50% + 430px + 0.473 * max(0px, 50% - 585px - min(92px, 3.95vw))); animation-name: hero-code-float-left-b;  animation-duration: 8s;   animation-delay: -5s; }
+  .hero-code-line:nth-child(3)  { top: 13%; right: calc(50% + 430px + 0.4   * max(0px, 50% - 593px - min(85px, 3.66vw))); animation-name: hero-code-float-left-a;  animation-duration: 7.5s; animation-delay: -1s; }
+  .hero-code-line:nth-child(4)  { top: 77%; right: calc(50% + 430px + 0.618 * max(0px, 50% - 577px - min(92px, 3.95vw))); animation-name: hero-code-float-left-b;  animation-duration: 9s;   animation-delay: -6s; }
+  .hero-code-line:nth-child(5)  { top: 2%;  right: calc(50% + 430px + 0.818 * max(0px, 50% - 515px - min(85px, 3.66vw))); animation-name: hero-code-float-left-a;  animation-duration: 7s;   animation-delay: -3s; }
+  .hero-code-line:nth-child(6)  { top: 61%; right: calc(50% + 430px + 0.636 * max(0px, 50% - 538px - min(92px, 3.95vw))); animation-name: hero-code-float-left-b;  animation-duration: 8.5s; animation-delay: -7s; }
+
+  .hero-code-line:nth-child(7)  { top: 24%; left: calc(50% + 430px + 0.545 * max(0px, 50% - 585px - min(85px, 3.66vw))); animation-name: hero-code-float-right-a; animation-duration: 7.5s; animation-delay: -4s; }
+  .hero-code-line:nth-child(8)  { top: 56%; left: calc(50% + 430px + 0.473 * max(0px, 50% - 585px - min(92px, 3.95vw))); animation-name: hero-code-float-right-b; animation-duration: 9s;   animation-delay: -1.5s; }
+  .hero-code-line:nth-child(9)  { top: 14%; left: calc(50% + 430px + 0.909 * max(0px, 50% - 562px - min(85px, 3.66vw))); animation-name: hero-code-float-right-a; animation-duration: 6.5s; animation-delay: -6.5s; }
+  .hero-code-line:nth-child(10) { top: 78%; left: calc(50% + 430px + 0.327 * max(0px, 50% - 593px - min(92px, 3.95vw))); animation-name: hero-code-float-right-b; animation-duration: 8s;   animation-delay: -2.5s; }
+  .hero-code-line:nth-child(11) { top: 3%;  left: calc(50% + 430px + 0.545 * max(0px, 50% - 585px - min(85px, 3.66vw))); animation-name: hero-code-float-right-a; animation-duration: 7s;   animation-delay: -5.5s; }
+  .hero-code-line:nth-child(12) { top: 62%; left: calc(50% + 430px + 0.909 * max(0px, 50% - 562px - min(92px, 3.95vw))); animation-name: hero-code-float-right-b; animation-duration: 9s;   animation-delay: -0.5s; }
+
+  /* Second wave of 12 (13-24). */
+  .hero-code-line:nth-child(13) { top: 34%; right: calc(50% + 430px + 0.818 * max(0px, 50% - 569px - min(85px, 3.66vw))); animation-name: hero-code-float-left-a;  animation-duration: 7s;   animation-delay: -3s; }
+  .hero-code-line:nth-child(14) { top: 82%; right: calc(50% + 430px + 0.327 * max(0px, 50% - 593px - min(92px, 3.95vw))); animation-name: hero-code-float-left-b;  animation-duration: 8.5s; animation-delay: -6s; }
+  .hero-code-line:nth-child(15) { top: 17%; right: calc(50% + 430px + 0.545 * max(0px, 50% - 585px - min(85px, 3.66vw))); animation-name: hero-code-float-left-a;  animation-duration: 6.5s; animation-delay: -1.5s; }
+  .hero-code-line:nth-child(16) { top: 93%; right: calc(50% + 430px + 0.727 * max(0px, 50% - 569px - min(92px, 3.95vw))); animation-name: hero-code-float-left-b;  animation-duration: 9s;   animation-delay: -4.5s; }
+  .hero-code-line:nth-child(17) { top: 44%; right: calc(50% + 430px + 0.691 * max(0px, 50% - 569px - min(85px, 3.66vw))); animation-name: hero-code-float-left-a;  animation-duration: 7.5s; animation-delay: -7s; }
+  .hero-code-line:nth-child(18) { top: 71%; right: calc(50% + 430px + 0.727 * max(0px, 50% - 569px - min(92px, 3.95vw))); animation-name: hero-code-float-left-b;  animation-duration: 8s;   animation-delay: -2s; }
+
+  .hero-code-line:nth-child(19) { top: 35%; left: calc(50% + 430px + 0.545 * max(0px, 50% - 585px - min(85px, 3.66vw))); animation-name: hero-code-float-right-a; animation-duration: 7s;   animation-delay: -3.5s; }
+  .hero-code-line:nth-child(20) { top: 94%; left: calc(50% + 430px + 0.327 * max(0px, 50% - 593px - min(92px, 3.95vw))); animation-name: hero-code-float-right-b; animation-duration: 9s;   animation-delay: -6.5s; }
+  .hero-code-line:nth-child(21) { top: 8%;  left: calc(50% + 430px + 0.545 * max(0px, 50% - 585px - min(85px, 3.66vw))); animation-name: hero-code-float-right-a; animation-duration: 6.5s; animation-delay: -1s; }
+  .hero-code-line:nth-child(22) { top: 83%; left: calc(50% + 430px + 0.618 * max(0px, 50% - 577px - min(92px, 3.95vw))); animation-name: hero-code-float-right-b; animation-duration: 8.5s; animation-delay: -5s; }
+  .hero-code-line:nth-child(23) { top: 45%; left: calc(50% + 430px + 0.4   * max(0px, 50% - 593px - min(85px, 3.66vw))); animation-name: hero-code-float-right-a; animation-duration: 7.5s; animation-delay: -2.5s; }
+  .hero-code-line:nth-child(24) { top: 72%; left: calc(50% + 430px + 0.473 * max(0px, 50% - 585px - min(92px, 3.95vw))); animation-name: hero-code-float-right-b; animation-duration: 8s;   animation-delay: -6s; }
+
+  /* Third wave (25-36) — six more per side, pushing the margins from "loose
+     scatter" to genuinely dense/packed. All 36 depths (N, the extra gap past
+     the safe zone) and the pseudo-code text lengths were re-derived together
+     this round: every string was trimmed to roughly ≤20 characters so it has
+     a known-safe max depth even at the bigger swing above (see Lesson.md
+     #34) — short text can still sit deep near the viewport edge, long text
+     stays closer to the safe zone, exactly as before, just with tighter
+     numbers backing the rule. */
+  .hero-code-line:nth-child(25) { top: 7%;  right: calc(50% + 430px + 0.691 * max(0px, 50% - 577px - min(85px, 3.66vw))); animation-name: hero-code-float-left-a;  animation-duration: 7.2s; animation-delay: -2.2s; }
+  .hero-code-line:nth-child(26) { top: 66%; right: calc(50% + 430px + 0.618 * max(0px, 50% - 577px - min(92px, 3.95vw))); animation-name: hero-code-float-left-b;  animation-duration: 8.2s; animation-delay: -4.8s; }
+  .hero-code-line:nth-child(27) { top: 28%; right: calc(50% + 430px + 0.691 * max(0px, 50% - 577px - min(85px, 3.66vw))); animation-name: hero-code-float-left-a;  animation-duration: 6.8s; animation-delay: -1.2s; }
+  .hero-code-line:nth-child(28) { top: 88%; right: calc(50% + 430px + 0.764 * max(0px, 50% - 569px - min(92px, 3.95vw))); animation-name: hero-code-float-left-b;  animation-duration: 9.2s; animation-delay: -6.2s; }
+  .hero-code-line:nth-child(29) { top: 39%; right: calc(50% + 430px + 1     * max(0px, 50% - 554px - min(85px, 3.66vw))); animation-name: hero-code-float-left-a;  animation-duration: 7.6s; animation-delay: -3.6s; }
+  .hero-code-line:nth-child(30) { top: 50%; right: calc(50% + 430px + 0.327 * max(0px, 50% - 593px - min(92px, 3.95vw))); animation-name: hero-code-float-left-b;  animation-duration: 8.6s; animation-delay: -5.6s; }
+
+  .hero-code-line:nth-child(31) { top: 18%; left: calc(50% + 430px + 0.691 * max(0px, 50% - 577px - min(85px, 3.66vw))); animation-name: hero-code-float-right-a; animation-duration: 7.2s; animation-delay: -2.6s; }
+  .hero-code-line:nth-child(32) { top: 89%; left: calc(50% + 430px + 0.764 * max(0px, 50% - 569px - min(92px, 3.95vw))); animation-name: hero-code-float-right-b; animation-duration: 8.4s; animation-delay: -5.2s; }
+  .hero-code-line:nth-child(33) { top: 40%; left: calc(50% + 430px + 1     * max(0px, 50% - 523px - min(85px, 3.66vw))); animation-name: hero-code-float-right-a; animation-duration: 6.6s; animation-delay: -1.6s; }
+  .hero-code-line:nth-child(34) { top: 51%; left: calc(50% + 430px + 0.473 * max(0px, 50% - 585px - min(92px, 3.95vw))); animation-name: hero-code-float-right-b; animation-duration: 9.4s; animation-delay: -6.6s; }
+  .hero-code-line:nth-child(35) { top: 29%; left: calc(50% + 430px + 0.691 * max(0px, 50% - 577px - min(85px, 3.66vw))); animation-name: hero-code-float-right-a; animation-duration: 7.8s; animation-delay: -3.2s; }
+  .hero-code-line:nth-child(36) { top: 67%; left: calc(50% + 430px + 0.764 * max(0px, 50% - 569px - min(92px, 3.95vw))); animation-name: hero-code-float-right-b; animation-duration: 8.8s; animation-delay: -5.8s; }
+
+  /* Fourth wave (37-42) — a handful of lines inside the CENTER column
+     itself, tucked into the thin strip directly above the eyebrow tag and
+     directly below the buttons (the vertical space the brand block doesn't
+     use). This is the one area the side-margin lines never touch, so
+     filling it is what turns the watermark from "busy margins, empty
+     middle-top/bottom" into something that reads as packed everywhere.
+     No left/right drift-direction concern here — horizontal movement can't
+     bring these closer to the logo because they're already vertically
+     clear of it (3-6% from the very top/bottom edge of the hero, while the
+     brand block sits vertically centered) — so they use the free-swinging
+     band keyframes, same as the mobile bands below. */
+  .hero-code-line:nth-child(37) { top: 2%;    left: 30%; animation-name: hero-code-float-band-up;   animation-duration: 7.4s; animation-delay: -1.8s; }
+  .hero-code-line:nth-child(39) { top: 5%;    left: 65%; animation-name: hero-code-float-band-up;   animation-duration: 8.2s; animation-delay: -2.8s; }
+  .hero-code-line:nth-child(38) { top: 8%;    left: 48%; animation-name: hero-code-float-band-up;   animation-duration: 6.6s; animation-delay: -4.2s; }
+  .hero-code-line:nth-child(40) { bottom: 2%; left: 28%; animation-name: hero-code-float-band-down; animation-duration: 7.6s; animation-delay: -3.4s; }
+  .hero-code-line:nth-child(42) { bottom: 5%; left: 64%; animation-name: hero-code-float-band-down; animation-duration: 8.6s; animation-delay: -1.2s; }
+  .hero-code-line:nth-child(41) { bottom: 8%; left: 46%; animation-name: hero-code-float-band-down; animation-duration: 6.8s; animation-delay: -5.6s; }
+}
+
+/* Mobile/tablet: covers everything below the 1250px desktop side-margin
+   breakpoint. .hero-inner is capped at 860px, so from ~1024px up to ~1249px
+   there's still very little side margin left (~80-195px per side) — not
+   reliably enough room for the side-margin lines' offset + swing + text
+   width to fit safely (confirmed with a deterministic "freeze every line at
+   its own keyframe's peak transform, then read real getBoundingClientRect()"
+   check via CDP: 1200px still clipped 8 of the 36 lines by a few px, 1250px
+   was the first round number that came back completely clean — see
+   Lesson.md #37) — so that whole narrow band of desktop widths deliberately
+   reuses this same thin-band layout instead of getting its own bespoke,
+   harder-to-verify ruleset.
+   Below that, only four/five lines survive, repositioned into thin bands
+   just above/below the content block instead of down the sides — smaller
+   and dimmer so they stay out of the way of the brand block. Their drift is
+   vertical-only and one-directional (top band only ever drifts further up,
+   bottom band only ever drifts further down), so no matter how big the
+   swing they can only move away from the content block in the middle,
+   never toward it. */
+@media (max-width: 1249px) {
+  .hero-code-line { display: none; font-size: 11px; opacity: 0.55; }
+
+  .hero-code-line:nth-child(1),
+  .hero-code-line:nth-child(6),
+  .hero-code-line:nth-child(7),
+  .hero-code-line:nth-child(11),
+  .hero-code-line:nth-child(13),
+  .hero-code-line:nth-child(18),
+  .hero-code-line:nth-child(19),
+  .hero-code-line:nth-child(24),
+  .hero-code-line:nth-child(39),
+  .hero-code-line:nth-child(42) {
+    display: block;
+  }
+
+  /* Top band — five lines now (was four). .hero centers its content
+     vertically (flex + align-items: center), so the clear strip above the
+     eyebrow tag on a phone is genuinely thin: confirmed with an outlined
+     debug render that it starts at ~7% of the hero's height, not the ~14%
+     first assumed — an earlier version of this rule pushed two lines past
+     that and into the eyebrow tag. The one new line is slotted into the
+     existing 3%-6% gap instead of extending the range. */
+  .hero-code-line:nth-child(1)  { top: 2%;   left: 3%;   animation-name: hero-code-float-band-up; animation-duration: 7s;   animation-delay: -2s; }
+  .hero-code-line:nth-child(19) { top: 3%;   right: 36%; animation-name: hero-code-float-band-up; animation-duration: 7.5s; animation-delay: -1s; }
+  .hero-code-line:nth-child(39) { top: 4.5%; right: 20%; animation-name: hero-code-float-band-up; animation-duration: 8.2s; animation-delay: -5.6s; }
+  .hero-code-line:nth-child(13) { top: 6%;   left: 32%;  animation-name: hero-code-float-band-up; animation-duration: 6s;   animation-delay: -4s; }
+  .hero-code-line:nth-child(7)  { top: 7%;   right: 4%;  animation-name: hero-code-float-band-up; animation-duration: 6.5s; animation-delay: -5s; }
+
+  /* Bottom band — five lines now (was four), same idea in reverse (drifting
+     further down), the one new line likewise slotted into the existing gap
+     rather than extending past the measured-safe range. */
+  .hero-code-line:nth-child(6)  { bottom: 2%;   left: 5%;   animation-name: hero-code-float-band-down; animation-duration: 8s;   animation-delay: -1s; }
+  .hero-code-line:nth-child(24) { bottom: 3%;   right: 34%; animation-name: hero-code-float-band-down; animation-duration: 8.5s; animation-delay: -5.5s; }
+  .hero-code-line:nth-child(42) { bottom: 4.5%; left: 22%;  animation-name: hero-code-float-band-down; animation-duration: 6.8s; animation-delay: -2.4s; }
+  .hero-code-line:nth-child(18) { bottom: 6%;   left: 40%;  animation-name: hero-code-float-band-down; animation-duration: 7s;   animation-delay: -3s; }
+  .hero-code-line:nth-child(11) { bottom: 7%;   right: 6%;  animation-name: hero-code-float-band-down; animation-duration: 7.5s; animation-delay: -4s; }
+}
+
+/* Mobile bands: horizontal drift is unconstrained here (both directions are
+   equally safe — these lines sit in a band that's already clear of the
+   content block regardless of how far they wander sideways), so it's free
+   to swing generously either way. Vertical drift stays one-directional
+   (top band only ever goes further up, bottom band only ever goes further
+   down) to guarantee it never approaches the content in the middle.
+   The X component is viewport-relative (same min()/max()-capped vw idea
+   used for the desktop lines): coefficients are calibrated to reproduce the
+   original fixed px values at a 400px reference phone width, so real phones
+   look unchanged, while the wider end of this range — now stretched up to
+   1249px to cover the tablet/small-laptop band introduced in Lesson.md #37
+   — gets a proportionally bigger, more visible swing instead of the same
+   tiny phone-sized movement stretched over a much bigger canvas. See
+   Lesson.md #38. */
+@keyframes hero-code-float-band-up {
+  0%   { transform: translate3d(0, 0, 0);                          opacity: 0.4; }
+  25%  { transform: translate3d(min(70px, 6.5vw), -14px, 0);        opacity: 0.6; }
+  50%  { transform: translate3d(max(-65px, -6vw), -28px, 0);        opacity: 0.85; }
+  75%  { transform: translate3d(min(55px, 5vw), -12px, 0);          opacity: 0.6; }
+  100% { transform: translate3d(0, 0, 0);                          opacity: 0.4; }
+}
+@keyframes hero-code-float-band-down {
+  0%   { transform: translate3d(0, 0, 0);                          opacity: 0.4; }
+  25%  { transform: translate3d(max(-70px, -6.5vw), 14px, 0);       opacity: 0.6; }
+  50%  { transform: translate3d(min(65px, 6vw), 28px, 0);           opacity: 0.85; }
+  75%  { transform: translate3d(max(-55px, -5vw), 12px, 0);         opacity: 0.6; }
+  100% { transform: translate3d(0, 0, 0);                          opacity: 0.4; }
+}
+
+/* Smaller, single-line callback used sparingly elsewhere (e.g. Contact).
+   Token colours mirror the same VS Code "Dark+" palette used by the floating
+   Hero watermark lines (.hero-code-line), applied via <span class="tok-*">
+   in the markup. */
+.code-snippet {
+  position: absolute;
+  margin: 0;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 1.85;
+  letter-spacing: 0.01em;
+  opacity: 0.98;
+  white-space: pre;
+  pointer-events: none;
+  user-select: none;
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .code-snippet {
+    display: block;
+  }
+}
+
+.code-snippet .tok-kw,   .hero-code-line .tok-kw   { color: #C586C0; } /* keywords: POST, GET, SELECT... */
+.code-snippet .tok-str,  .hero-code-line .tok-str  { color: #CE9178; } /* strings / paths */
+.code-snippet .tok-prop, .hero-code-line .tok-prop { color: #9CDCFE; } /* object keys */
+.code-snippet .tok-fn,   .hero-code-line .tok-fn   { color: #DCDCAA; } /* function calls */
+.code-snippet .tok-type, .hero-code-line .tok-type { color: #4EC9B0; } /* identifiers / nouns */
+.code-snippet .tok-punc, .hero-code-line .tok-punc { color: var(--color-ink); } /* braces, colons, dots */
+
+.hero-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 860px;
+  margin: 0 auto;
+  padding: calc(var(--nav-height) * 0.6) var(--container-pad) 80px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hero-inner .eyebrow {
+  margin-bottom: 40px;
+}
+
+.hero-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 44px;
+}
+
+.hero-mark {
+  width: clamp(120px, 16vw, 168px);
+  height: auto;
+}
+
+.hero-fullname {
+  font-family: var(--font-body);
+  font-size: clamp(12px, 1.3vw, 14px);
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-ink-soft);
+}
+
+.hero-tagline {
+  font-size: clamp(28px, 4vw, 46px);
+  font-style: normal;
+  font-weight: 600;
+  max-width: 20ch;
+  margin-bottom: 26px;
+  letter-spacing: -0.02em;
+}
+
+.hero-sub {
+  font-size: clamp(16px, 1.6vw, 18px);
+  color: var(--color-ink-soft);
+  max-width: 56ch;
+  margin-bottom: 28px;
+}
+
+/* Hero pain-check: compact resonance strip between subtext and CTA.
+   Not a card — no border/shadow/radius. Kept narrow so the first viewport
+   still reads as one composition (brand → H1 → sub → short list → CTA). */
+.hero-pain-check {
+  max-width: 42em;
+  margin: 0 auto 36px;
+  text-align: left;
+}
+
+.hero-pain-check__label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.hero-pain-check__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.hero-pain-check__list li {
+  position: relative;
+  padding-left: 1.1em;
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--color-ink-soft);
+}
+
+.hero-pain-check__list li::before {
+  content: '·';
+  position: absolute;
+  left: 0;
+  color: var(--color-muted);
+  font-weight: 700;
+}
+
+.hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* --------------------------------------------------------------------------
+   6. SERVICES
+   -------------------------------------------------------------------------- */
+.service-list {
+  border-top: 1px solid var(--color-border);
+}
+
+.service-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: 96px 1fr;
+  gap: 32px;
+  padding: 44px 0;
+  border-bottom: 1px solid var(--color-border);
+  transition: padding-left var(--transition-base);
+}
+
+.service-row::before {
+  content: '';
+  position: absolute;
+  left: -16px;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--color-ink);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform var(--transition-base);
+}
+
+.service-row:hover {
+  padding-left: 14px;
+}
+
+.service-row:hover::before,
+.service-row:focus-within::before {
+  transform: scaleY(1);
+}
+
+.service-index {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--color-muted);
+  padding-top: 4px;
+  transition: color var(--transition-base);
+}
+
+.service-row:hover .service-index {
+  color: var(--color-ink);
+}
+
+.service-body h3 {
+  font-size: clamp(21px, 2.2vw, 26px);
+  margin-bottom: 12px;
+}
+
+.service-body p {
+  color: var(--color-ink-soft);
+  max-width: 62ch;
+  font-size: 15.5px;
+}
+
+/* Pain line above each capability description — question form, soft weight. */
+.capability-pain {
+  font-style: italic;
+  color: var(--color-ink) !important;
+  margin-bottom: 8px;
+  font-size: 15px !important;
+}
+
+.service-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 16px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--color-ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--color-line);
+  transition: border-color var(--transition-fast);
+}
+
+.service-more span[aria-hidden] {
+  display: inline-block;
+  transition: transform var(--transition-fast);
+}
+
+.service-more:hover,
+.service-more:focus-visible {
+  border-bottom-color: var(--color-ink);
+}
+
+.service-more:hover span[aria-hidden],
+.service-more:focus-visible span[aria-hidden] {
+  transform: translateX(4px);
+}
+
+/* --------------------------------------------------------------------------
+   7. PROCESS
+   -------------------------------------------------------------------------- */
+.process-list {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  border-top: 1px solid var(--color-line);
+}
+
+/* Dedicated /process/ page: stack steps vertically in the content measure. */
+.process-list--page {
+  grid-template-columns: 1fr;
+  border-top: none;
+  max-width: 40rem;
+}
+
+.process-list--page::before {
+  display: none;
+}
+
+.process-list--page .process-step {
+  border-left: none;
+  border-top: 1px solid var(--color-line);
+  padding: 36px 0 28px;
+}
+
+.process-list--page .process-step:first-child {
+  border-top: none;
+  padding-top: 0;
+}
+
+.process-list--page .process-step h2 {
+  font-size: clamp(22px, 2.4vw, 28px);
+  margin-bottom: 12px;
+}
+
+.process-list--page .process-step p {
+  max-width: 48ch;
+}
+
+/* Static connector line running behind the step nodes — reads as a
+   simple pipeline/workflow diagram. Desktop (3-column) layout only. */
+@media (min-width: 861px) {
+  .process-list::before {
+    content: '';
+    position: absolute;
+    top: 58px;
+    left: calc((100% / 6));
+    right: calc((100% / 6));
+    height: 1px;
+    background: var(--color-line);
+    z-index: 0;
+  }
+}
+
+.process-step {
+  padding: 40px 40px 24px 0;
+  border-left: 1px solid var(--color-line);
+  padding-left: 32px;
+  border-radius: var(--radius-sm);
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.process-step:first-child {
+  border-left: none;
+  padding-left: 0;
+}
+
+.process-step:hover {
+  transform: translateY(-6px);
+}
+
+.process-number {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  margin-bottom: 22px;
+  border: 1px solid var(--color-line);
+  border-radius: 50%;
+  background: var(--color-bg);
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--color-muted);
+  transition: color var(--transition-base), border-color var(--transition-base);
+}
+
+.section-soft .process-number {
+  background: var(--color-bg-soft);
+}
+
+.process-step:hover .process-number {
+  color: var(--color-ink);
+  border-color: var(--color-ink);
+}
+
+.process-step h3 {
+  font-size: 22px;
+  margin-bottom: 12px;
+}
+
+.process-step p {
+  color: var(--color-ink-soft);
+  font-size: 15.5px;
+  max-width: 42ch;
+}
+
+/* --------------------------------------------------------------------------
+   8. CONTACT SECTION
+   -------------------------------------------------------------------------- */
+.section-contact {
+  position: relative;
+  overflow: hidden;
+}
+
+.code-snippet--contact {
+  top: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+.contact-block {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.contact-block .eyebrow {
+  margin-bottom: 18px;
+}
+
+.contact-block h2 {
+  font-size: clamp(28px, 3.6vw, 42px);
+  margin-bottom: 20px;
+}
+
+.contact-block .section-lead {
+  margin: 0 auto 40px;
+}
+
+/* --------------------------------------------------------------------------
+   9. CONTACT PAGE CHANNELS (icon + label rows, no modal)
+   -------------------------------------------------------------------------- */
+.contact-channels {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  max-width: 28rem;
+  margin: 8px 0 0;
+}
+
+.contact-channel {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 22px 0;
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-ink);
+  text-decoration: none;
+  transition: color var(--transition-fast), padding-left var(--transition-fast), transform var(--transition-fast);
+}
+
+.contact-channel:first-child {
+  border-top: 1px solid var(--color-border);
+}
+
+.contact-channel:hover,
+.contact-channel:focus-visible {
+  color: var(--color-ink);
+  padding-left: 6px;
+}
+
+.contact-channel:active {
+  transform: scale(0.985);
+}
+
+.contact-channel-icon {
+  display: inline-flex;
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  color: var(--color-ink);
+  transition: transform var(--transition-fast);
+}
+
+.contact-channel:hover .contact-channel-icon,
+.contact-channel:focus-visible .contact-channel-icon {
+  transform: translateX(2px);
+}
+
+.contact-channel-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.contact-channel-label {
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+/* --------------------------------------------------------------------------
+   10. FOOTER
+   -------------------------------------------------------------------------- */
+.footer {
+  background: var(--color-footer-bg);
+  color: var(--color-footer-text);
+}
+
+.footer-inner {
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: 48px var(--container-pad);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 28px;
+  flex-wrap: wrap;
+}
+
+.footer-brand {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.footer-brand-text {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.footer-address {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--color-footer-muted);
+  max-width: 36ch;
+}
+
+.footer-mark {
+  width: 22px;
+  height: auto;
+  margin-top: 2px;
+}
+
+/* Footer internal links — only point at shipped pages (see index.html). */
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  align-items: center;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.footer-links a {
+  color: var(--color-footer-muted);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.footer-links a:hover,
+.footer-links a:focus-visible {
+  color: var(--color-footer-text);
+}
+
+.footer-meta {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  font-size: 13px;
+  color: var(--color-footer-muted);
+}
+
+/* --------------------------------------------------------------------------
+   10. SCROLL-REVEAL + HERO ENTER
+   -------------------------------------------------------------------------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 700ms var(--ease), transform 700ms var(--ease);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Homepage first-viewport entrance — brand → headline → support → CTA. */
+.hero-enter {
+  opacity: 0;
+  transform: translateY(16px);
+  animation: hero-enter 720ms var(--ease) forwards;
+  animation-delay: var(--enter-delay, 0ms);
+}
+
+@keyframes hero-enter {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+body.nav-open {
+  overflow: hidden;
+}
+
+/* --------------------------------------------------------------------------
+   11. RESPONSIVE
+   -------------------------------------------------------------------------- */
+@media (max-width: 1024px) {
+  .section {
+    padding: 96px 0;
+  }
+}
+
+/* Below full-desktop width: hamburger only — avoids link/logo/lang overlap */
+@media (max-width: 1400px) {
+  .nav-inner {
+    grid-template-columns: max-content 1fr max-content;
+    column-gap: 12px;
+  }
+
+  .nav-actions {
+    gap: 12px;
+  }
+
+  .nav-cta-desktop {
+    display: none;
+  }
+
+  .nav-toggle {
+    display: flex;
+  }
+
+  /* Drawer stacks below the bar; the bar itself stays brand | actions only. */
+  .nav-links {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    justify-content: flex-start;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    gap: 0;
+    width: 100%;
+    max-width: none;
+    overflow: visible;
+    padding: 8px var(--container-pad) 24px;
+    background: #fff;
+    border-bottom: 1px solid var(--color-border);
+    box-shadow: 0 16px 32px rgba(17, 17, 16, 0.06);
+    transform-origin: top;
+    transform: scaleY(0);
+    opacity: 0;
+    visibility: hidden;
+    transition: transform var(--transition-base), opacity var(--transition-base), visibility var(--transition-base);
+    z-index: 101;
+  }
+
+  .nav-links[data-open="true"] {
+    transform: scaleY(1);
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .nav-links a {
+    width: 100%;
+    padding: 14px 0 14px 14px;
+    border-bottom: 1px solid var(--color-border);
+    border-left: 2px solid transparent;
+    font-size: 16px;
+    transition: color var(--transition-fast), border-color var(--transition-fast), padding-left var(--transition-fast);
+  }
+
+  .nav-links a.is-active,
+  .nav-links a[aria-current="page"] {
+    border-left-color: var(--color-ink);
+    padding-left: 20px;
+    font-weight: 700;
+  }
+
+  .nav-cta-mobile {
+    display: inline-flex;
+    margin-top: 18px;
+    width: 100%;
+  }
+}
+
+@media (max-width: 860px) {
+  .process-list {
+    grid-template-columns: 1fr;
+    border-top: none;
+  }
+
+  .process-step {
+    border-left: none;
+    border-top: 1px solid var(--color-line);
+    padding: 40px 0 0;
+  }
+
+  .process-step:first-child {
+    border-top: none;
+  }
+}
+
+@media (max-width: 640px) {
+  :root {
+    --container-pad: 20px;
+    --nav-height: 72px;
+  }
+
+  .section {
+    padding: 72px 0;
+  }
+
+  .section-head {
+    margin-bottom: 48px;
+  }
+
+  .hero-inner {
+    padding-top: 32px;
+    padding-bottom: 56px;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .btn-lg {
+    width: 100%;
+  }
+
+  .service-row {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .footer-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  /* Balance line-breaks on short multi-line text so mobile never ends up
+     with a single orphan word alone on its own line (e.g. "...SYSTEMS"
+     or "...reserved." sitting by itself) — copy text itself is untouched. */
+  .hero-inner .eyebrow,
+  .footer-meta p {
+    text-wrap: balance;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   12. INNER PAGES (/kuching/ /faq/ /about/ /capabilities/*/)
+       Shared layout for English SEO landing pages — no hero code watermark.
+   -------------------------------------------------------------------------- */
+.page-hero {
+  padding: calc(var(--nav-height) + 48px) 0 40px;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% -10%, rgba(17, 17, 16, 0.04), transparent 60%),
+    linear-gradient(180deg, var(--color-bg-soft) 0%, var(--color-bg) 100%);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.page-hero-inner {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 var(--container-pad);
+}
+
+.page-hero h1 {
+  font-size: clamp(28px, 4vw, 42px);
+  font-weight: 500;
+  margin: 12px 0 18px;
+  max-width: 18ch;
+}
+
+.page-hero .page-lead {
+  font-size: 17px;
+  color: var(--color-ink-soft);
+  max-width: 52ch;
+  margin: 0;
+}
+
+.page-content {
+  padding: 56px 0 80px;
+}
+
+.page-content-inner {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 var(--container-pad);
+}
+
+.page-block {
+  margin-bottom: 48px;
+}
+
+.page-block h2 {
+  font-size: clamp(22px, 2.4vw, 28px);
+  margin-bottom: 14px;
+}
+
+.page-block p,
+.page-block li {
+  color: var(--color-ink-soft);
+  font-size: 15.5px;
+  line-height: 1.65;
+  max-width: 62ch;
+}
+
+.page-block p + p {
+  margin-top: 14px;
+}
+
+.page-block ul {
+  list-style: none;
+  padding: 0;
+  margin: 16px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.page-block ul li {
+  position: relative;
+  padding-left: 1.15em;
+}
+
+.page-block ul li::before {
+  content: '·';
+  position: absolute;
+  left: 0;
+  color: var(--color-muted);
+  font-weight: 700;
+}
+
+.page-cta {
+  margin-top: 8px;
+  padding-top: 40px;
+  border-top: 1px solid var(--color-border);
+}
+
+.page-cta h2 {
+  font-size: clamp(24px, 3vw, 32px);
+  margin-bottom: 14px;
+}
+
+.page-cta p {
+  color: var(--color-ink-soft);
+  margin-bottom: 28px;
+  max-width: 48ch;
+}
+
+/* FAQ accordion — details/summary; one-open behaviour in main.js. */
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.faq-item {
+  padding: 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.faq-item:first-child {
+  border-top: none;
+}
+
+.faq-item summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 28px 0;
+  transition: color var(--transition-fast);
+}
+
+.faq-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-item summary::after {
+  content: '+';
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-size: 18px;
+  line-height: 1.2;
+  color: var(--color-muted);
+  transition: transform var(--transition-fast), color var(--transition-fast);
+}
+
+.faq-item[open] summary::after {
+  content: '–';
+  color: var(--color-ink);
+}
+
+.faq-item summary:hover h2,
+.faq-item summary:hover h3,
+.faq-item summary:focus-visible h2,
+.faq-item summary:focus-visible h3 {
+  color: var(--color-ink-soft);
+}
+
+.faq-item summary:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+.faq-item summary h2,
+.faq-item summary h3 {
+  font-size: clamp(18px, 2vw, 22px);
+  margin: 0;
+  font-weight: 600;
+  transition: color var(--transition-fast);
+}
+
+.faq-item p {
+  color: var(--color-ink-soft);
+  font-size: 15.5px;
+  line-height: 1.65;
+  max-width: 62ch;
+  margin: 0 0 28px;
+  padding-right: 2rem;
+}
+
+.scene-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.scene-list p {
+  margin: 0;
+  padding-left: 1.15em;
+  position: relative;
+}
+
+.scene-list p::before {
+  content: '·';
+  position: absolute;
+  left: 0;
+  color: var(--color-muted);
+  font-weight: 700;
+}
+
+@media (max-width: 640px) {
+  .page-hero {
+    padding-top: calc(var(--nav-height) + 28px);
+  }
+
+  .page-content {
+    padding: 40px 0 64px;
+  }
+}
+
+/* Capability Q&A entry under each service row */
+.service-body .service-more + .service-more {
+  margin-left: 1.25rem;
+}
+
+.page-cta .link-arrow {
+  display: inline-flex;
+  margin-bottom: 1rem;
+}
+
+
+/* Full desktop row: roomy gaps, still clipped to the middle grid track */
+@media (min-width: 1401px) {
+  .nav-links {
+    gap: 0 28px;
+    padding: 0 10px;
+    font-size: 15.5px;
+  }
+
+  .nav-toggle {
+    display: none;
+  }
+}
